@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: portal-motorista-postgres
+    environment:
+      POSTGRES_DB: portal_motorista
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - portal-motorista-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d portal_motorista"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: DockerFile
+      args:
+        DB_URL: jdbc:postgresql://postgres:5432/portal_motorista
+        DB_USERNAME: admin
+        DB_PASSWORD: admin123
+    container_name: portal-motorista-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/portal_motorista
+      DB_USERNAME: admin
+      DB_PASSWORD: admin123
+    networks:
+      - portal-motorista-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  portal-motorista-network:
+    driver: bridge
