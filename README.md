@@ -313,8 +313,6 @@ Todos os usuários possuem a senha padrão: **`123456`**
 ```json
 {
   "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "tipo": "Bearer",
-  "expiracaoEmMinutos": 1440
 }
 ```
 
@@ -461,8 +459,6 @@ curl -X POST http://localhost:8080/api/autenticacao/login \
 ```json
 {
   "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2FvLnNpbHZhQGVtYWlsLmNvbSIsImlhdCI6MTczODYxMjAwMCwiZXhwIjoxNzM4Njk4NDAwfQ...",
-  "tipo": "Bearer",
-  "expiracaoEmMinutos": 1440
 }
 ```
 
