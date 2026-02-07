@@ -13,17 +13,6 @@ RUN bash ./mvnw clean install -DskipTests
 # Estágio de execução: Usa JRE 21 para rodar a aplicação
 FROM eclipse-temurin:21-jre-jammy
 
-# Definir ARGs para as variáveis de ambiente
-ARG DB_URL
-ARG DB_USERNAME
-ARG DB_PASSWORD
-
-# Define variáveis de ambiente
-ENV DB_URL=${DB_URL}
-ENV DB_USERNAME=${DB_USERNAME}
-ENV DB_PASSWORD=${DB_PASSWORD}
-
-
 WORKDIR /opt/app
 
 # Copia o JAR gerado na etapa de build para o ambiente de execução
