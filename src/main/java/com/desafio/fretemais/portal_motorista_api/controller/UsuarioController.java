@@ -66,7 +66,7 @@ public interface UsuarioController {
         @Valid @RequestBody UsuarioReqDto dto
     );
 
-    @Operation(summary = "Atualizar usuário", description = "Atualiza os dados de um usuário existente")
+    @Operation(summary = "Atualizar usuário", description = "Atualiza os dados de um usuário existente (senha não é obrigatória)")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso"),
         @ApiResponse(responseCode = "404", description = "Usuário não encontrado", content = @Content),
@@ -79,7 +79,7 @@ public interface UsuarioController {
         @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Novos dados do usuário",
             required = true,
-            content = @Content(schema = @Schema(implementation = UsuarioReqDto.class))
+            content = @Content(schema = @Schema(implementation = UsuarioUpdateReqDto.class))
         )
         @Valid @RequestBody UsuarioUpdateReqDto dto
     );
