@@ -2,6 +2,7 @@ package com.desafio.fretemais.portal_motorista_api.controller;
 
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioFilterReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioReqDto;
+import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioUpdateReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.response.UsuarioResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -80,7 +81,7 @@ public interface UsuarioController {
             required = true,
             content = @Content(schema = @Schema(implementation = UsuarioReqDto.class))
         )
-        @Valid @RequestBody UsuarioReqDto dto
+        @Valid @RequestBody UsuarioUpdateReqDto dto
     );
 
     @Operation(summary = "Deletar usuário (soft delete)",

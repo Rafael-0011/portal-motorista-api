@@ -1,6 +1,7 @@
 package com.desafio.fretemais.portal_motorista_api.model.mapper;
 
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioReqDto;
+import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioUpdateReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.response.UsuarioResDto;
 import com.desafio.fretemais.portal_motorista_api.model.entity.UsuarioEntity;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,21 @@ public class UsuarioMapper {
     public void updateEntityFromDTO(UsuarioEntity entity, UsuarioReqDto dto) {
         entity.setNome(dto.nome());
         entity.setEmail(dto.email());
+        if (dto.senha() != null && !dto.senha().isEmpty()) {
+            entity.setSenha(passwordEncoder.encode(dto.senha()));
+        }
+        entity.setTelefone(dto.telefone());
+        entity.setCidade(dto.cidade());
+        entity.setUf(dto.uf().toUpperCase());
+        entity.setRole(dto.role());
+        entity.setStatus(dto.status());
+        entity.setTiposVeiculo(dto.tiposVeiculo());
+    }
+
+    public void updateEntityFromDTO(UsuarioEntity entity, UsuarioUpdateReqDto dto) {
+        entity.setNome(dto.nome());
+        entity.setEmail(dto.email());
+        // Atualiza a senha apenas se foi fornecida
         if (dto.senha() != null && !dto.senha().isEmpty()) {
             entity.setSenha(passwordEncoder.encode(dto.senha()));
         }

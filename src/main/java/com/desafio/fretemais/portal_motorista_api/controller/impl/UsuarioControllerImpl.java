@@ -3,6 +3,7 @@ package com.desafio.fretemais.portal_motorista_api.controller.impl;
 import com.desafio.fretemais.portal_motorista_api.controller.UsuarioController;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioFilterReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioReqDto;
+import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioUpdateReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.response.UsuarioResDto;
 import com.desafio.fretemais.portal_motorista_api.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -47,7 +48,7 @@ public class UsuarioControllerImpl implements UsuarioController {
     @Override
     @PutMapping("{id}")
     @PreAuthorize("hasAnyRole('MOTORISTA', 'ADMIN')")
-    public ResponseEntity<UsuarioResDto> atualizar(@PathVariable UUID id, @Valid @RequestBody UsuarioReqDto dto) {
+    public ResponseEntity<UsuarioResDto> atualizar(@PathVariable UUID id, @Valid @RequestBody UsuarioUpdateReqDto dto) {
         return ResponseEntity.ok(usuarioService.atualizar(id, dto));
     }
 

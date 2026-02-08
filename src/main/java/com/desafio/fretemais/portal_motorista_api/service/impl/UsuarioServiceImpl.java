@@ -4,6 +4,7 @@ import com.desafio.fretemais.portal_motorista_api.shared.exception.EmailJaCadast
 import com.desafio.fretemais.portal_motorista_api.shared.exception.UsuarioNotFoundException;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioFilterReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioReqDto;
+import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioUpdateReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.response.UsuarioResDto;
 import com.desafio.fretemais.portal_motorista_api.model.entity.UsuarioEntity;
 import com.desafio.fretemais.portal_motorista_api.model.enums.StatusUsuarioEnum;
@@ -27,6 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
     private final UsuarioSpecification usuarioSpecification;
+    private final AutenticacaoServiceImpl autenticacaoService;
 
     @Override
     public UsuarioResDto criar(UsuarioReqDto dto) {
@@ -39,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public UsuarioResDto atualizar(UUID id, UsuarioReqDto dto) {
+    public UsuarioResDto atualizar(UUID id, UsuarioUpdateReqDto dto) {
 
         UsuarioEntity entity = buscarPorIdOuLancarExcecao(id);
         validarEmailUnico(dto.email(), id);
@@ -60,8 +62,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(readOnly = true)
     public Page<UsuarioResDto> buscarComFiltros(UsuarioFilterReqDto filter, Pageable pageable) {
+        var usuarioLogado = autenticacaoService.resgatarUsuarioLogado();
+
         Page<UsuarioEntity> entities = usuarioRepository.findAll(
-                usuarioSpecification.getFilter(filter),
+                usuarioSpecification.getFilter(filter, usuarioLogado.usuario().getId()),
                 pageable
         );
 
