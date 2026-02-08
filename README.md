@@ -1120,7 +1120,7 @@ Atualize o `docker-compose.yml`:
 api:
   build:
     context: .
-    dockerfile: DockerFile
+    dockerfile: Dockerfile
   volumes:
     - ./src/main/resources/app.key:/opt/app/src/main/resources/app.key:ro
     - ./src/main/resources/app.pub:/opt/app/src/main/resources/app.pub:ro

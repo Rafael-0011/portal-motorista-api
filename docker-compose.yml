@@ -23,7 +23,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
       args:
         DB_URL: jdbc:postgresql://postgres:5432/portal_motorista
         DB_USERNAME: admin

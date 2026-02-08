@@ -44,22 +44,19 @@ public class UsuarioSpecification {
                         "%" + filter.cidade().toLowerCase() + "%"));
             }
 
-            // Filtro por Tipos de Veículo (JSONB contains)
+            // Filtro por Tipos de Veículo (JSONB contains - usa operador @> do PostgreSQL)
             if (filter.tiposVeiculo() != null && !filter.tiposVeiculo().isEmpty()) {
                 List<Predicate> vehiclePredicates = new ArrayList<>();
                 for (VehicleTypeEnum vehicleType : filter.tiposVeiculo()) {
-                    // Para JSONB, vamos usar uma função nativa do PostgreSQL
+                    // Usa jsonb_path_exists do PostgreSQL para buscar valores no array JSONB
+                    // O índice GIN será usado automaticamente
                     vehiclePredicates.add(
                         criteriaBuilder.isTrue(
                             criteriaBuilder.function(
-                                "jsonb_exists",
+                                "jsonb_path_exists",
                                 Boolean.class,
-                                criteriaBuilder.function(
-                                    "cast",
-                                    String.class,
-                                    root.get("tiposVeiculo")
-                                ),
-                                criteriaBuilder.literal(vehicleType.name())
+                                root.get("tiposVeiculo"),
+                                criteriaBuilder.literal("$[*] ? (@ == \"" + vehicleType.name() + "\")")
                             )
                         )
                     );
