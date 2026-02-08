@@ -2,6 +2,7 @@ package com.desafio.fretemais.portal_motorista_api.service;
 
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioFilterReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioReqDto;
+import com.desafio.fretemais.portal_motorista_api.model.dto.request.UsuarioUpdateReqDto;
 import com.desafio.fretemais.portal_motorista_api.model.dto.response.UsuarioResDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ public interface UsuarioService {
 
     UsuarioResDto criar(UsuarioReqDto dto);
 
-    UsuarioResDto atualizar(UUID id, UsuarioReqDto dto);
+    UsuarioResDto atualizar(UUID id, UsuarioUpdateReqDto dto);
 
     UsuarioResDto buscarPorId(UUID id);
 

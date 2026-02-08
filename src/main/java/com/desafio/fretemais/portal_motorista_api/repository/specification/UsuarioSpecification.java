@@ -9,13 +9,23 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class UsuarioSpecification {
 
     public Specification<UsuarioEntity> getFilter(UsuarioFilterReqDto filter) {
+        return getFilter(filter, null);
+    }
+
+    public Specification<UsuarioEntity> getFilter(UsuarioFilterReqDto filter, UUID excludeUserId) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            // Excluir usuário específico (geralmente o usuário logado)
+            if (excludeUserId != null) {
+                predicates.add(criteriaBuilder.notEqual(root.get("id"), excludeUserId));
+            }
 
             // Filtro por texto (nome, email ou telefone)
             if (filter.texto() != null && !filter.texto().isEmpty()) {
