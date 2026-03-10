@@ -14,9 +14,6 @@ import java.util.UUID;
 @Component
 public class UsuarioSpecification {
 
-    public Specification<UsuarioEntity> getFilter(UsuarioFilterReqDto filter) {
-        return getFilter(filter, null);
-    }
 
     public Specification<UsuarioEntity> getFilter(UsuarioFilterReqDto filter, UUID excludeUserId) {
         return (root, query, criteriaBuilder) -> {
